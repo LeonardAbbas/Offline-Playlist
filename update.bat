@@ -1,9 +1,10 @@
 @echo off
 setlocal enabledelayedexpansion
 
-call unsort.bat
-
 chcp 65001 >nul
+
+call unsort.bat
+call videos.bat
 
 set "songsDownloaded=0"
 
@@ -23,12 +24,10 @@ for /f "delims=" %%a in ('type "videos.txt"') do (
 )
 echo Songs in playlist: %songsInPlaylist%
 
-yt-dlp -U
-
 :download_loop
 if %songsDownloaded% lss %songsInPlaylist% (
     echo Downloading videos %songsDownloaded% to %songsInPlaylist%
-    yt-dlp PLLrZ_MgFFAB_yF8QNecKLEmBiVfXM4L2H -I %songsDownloaded%:%songsInPlaylist%
+    yt-dlp -I %songsDownloaded%:%songsInPlaylist%
     set /a songsDownloaded+=100
     goto :download_loop
 )
@@ -49,11 +48,12 @@ for /L %%i in (1,1,!songsInPlaylist!) do (
     set "num=!num:~-4!"
     if not exist "Music 1\!num!.mp3" (
         echo Downloading !num!
-        yt-dlp PLLrZ_MgFFAB_yF8QNecKLEmBiVfXM4L2H -I %%i
+        yt-dlp -I %%i
     )
 )
 
 del temp.txt
+del videos.txt
 
 call rename.bat
 call sort.bat

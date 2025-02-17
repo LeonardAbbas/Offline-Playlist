@@ -3,7 +3,6 @@ setlocal
 
 chcp 65001 >nul
 
-yt-dlp PLLrZ_MgFFAB_yF8QNecKLEmBiVfXM4L2H --get-title --flat-playlist --extractor-args youtube:lang=af
+yt-dlp --get-title --flat-playlist > videos.txt
 
 endlocal
-pause
