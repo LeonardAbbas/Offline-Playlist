@@ -8,7 +8,7 @@ call videos.bat
 
 set "songsDownloaded=0"
 
-for %%f in ("Music 1\*.mp3") do (
+for /r %%f in (*.mp3) do (
     set "fileNumber=%%~nf"
     set "fileNumber=!fileNumber:~-4!"
     if !fileNumber! gtr !songsDownloaded! (
@@ -32,8 +32,8 @@ if %songsDownloaded% lss %songsInPlaylist% (
     goto :download_loop
 )
 
-for /f "tokens=*" %%b in ('dir /b /on "Music 1\*.mp3"') do (
-    ffprobe -v error -show_entries format_tags=title -of default=noprint_wrappers=1:nokey=1 -i "Music 1\%%b" > temp.txt
+for /f "tokens=*" %%b in ('dir /b /on "temp\*.mp3"') do (
+    ffprobe -v error -show_entries format_tags=title -of default=noprint_wrappers=1:nokey=1 -i "temp\%%b" > temp.txt
     for /f "delims=" %%c in ('type temp.txt') do (
         set "title=%%c"
     )
@@ -46,7 +46,7 @@ for /f "tokens=*" %%b in ('dir /b /on "Music 1\*.mp3"') do (
 for /L %%i in (1,1,!songsInPlaylist!) do (
     set "num=0000%%i"
     set "num=!num:~-4!"
-    if not exist "Music 1\!num!.mp3" (
+    if not exist "temp\!num!.mp3" (
         echo Downloading !num!
         yt-dlp -I %%i
     )
@@ -57,6 +57,8 @@ del videos.txt
 
 call rename.bat
 call sort.bat
+
+rmdir temp /q
 
 endlocal
 pause
@@ -77,8 +79,8 @@ for /l %%i in (!startLineNumber!,-1,0) do (
         ) 
 
         if not "!filename!"=="!num!" (
-            if exist "Music 1\!num!.mp3" del "Music 1\!num!.mp3"
-            ren "Music 1\!filepath!" "!num!.mp3"
+            if exist "temp\!num!.mp3" del "temp\!num!.mp3"
+            ren "temp\!filepath!" "!num!.mp3"
         )
         goto :check_title_end
     )

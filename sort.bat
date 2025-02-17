@@ -1,11 +1,11 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Moves all mp3 files from "Music 1" folder into numbered folders with 256 files each.
+REM Moves all mp3 files into numbered folders with 256 files each.
 
 echo Start sorting: %time%
 
-for %%f in ("Music 1\*.mp3") do (
+for /r %%f in (*.mp3) do (
     set "name=%%~nf"
     call :removeLeadingZeros
 
@@ -14,7 +14,7 @@ for %%f in ("Music 1\*.mp3") do (
     call :findFolder
 
     if not exist "Music !folder!" mkdir "Music !folder!"
-    move "Music 1\%%~nxf" "Music !folder!\%%~nxf" >nul
+    move "%%f" "Music !folder!\%%~nxf" >nul
 )
 
 echo End sorting: %time%
