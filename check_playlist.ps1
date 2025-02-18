@@ -1,8 +1,8 @@
 # Read video titles from the text file
-$videos = Get-Content -Path "videos.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
+$videos = Get-Content -Path "videos_online.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
 
 # Read all lines from DownloadedVideos.txt
-$downloadedVideos = Get-Content -Path "DownloadedVideos.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
+$downloadedVideos = Get-Content -Path "videos_offline.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
 
 $downloadedCount = 0
 $notDownloadedCount = 0

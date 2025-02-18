@@ -14,7 +14,7 @@ for /r %%f in (*.mp3) do (
 echo Songs downloaded: %songsDownloaded%
 
 set "songsInPlaylist=0"
-for /f "delims=" %%a in ('type "videos.txt"') do (
+for /f "delims=" %%a in ('type "videos_online.txt"') do (
     set /a songsInPlaylist+=1
 )
 echo Songs in playlist: %songsInPlaylist%

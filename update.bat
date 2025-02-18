@@ -3,7 +3,6 @@ setlocal enabledelayedexpansion
 
 call unsort.bat
 call get-videos.bat
-call get-downloaded-videos.bat
 call download-new-videos.bat
 
 powershell.exe -ExecutionPolicy Bypass -File check_playlist.ps1
