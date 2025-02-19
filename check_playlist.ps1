@@ -1,6 +1,6 @@
-$videosOfflineChannels = Get-Content -Path "videos_offline_channels.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
+$videosOfflineChannels = Get-Content -Path "videos_offline_channels.txt" -Encoding UTF8 | ForEach-Object { $_.TrimEnd() -replace '!', '' }
 $videosOffline = Get-Content -Path "videos_offline.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
-$videosOnlineChannels = Get-Content -Path "videos_online_channels.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
+$videosOnlineChannels = Get-Content -Path "videos_online_channels.txt" -Encoding UTF8 | ForEach-Object { $_.TrimEnd() -replace '!', '' }
 $videosOnline = Get-Content -Path "videos_online.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
 
 $mismatches = 0
@@ -23,7 +23,7 @@ foreach ($video in $videosOffline) {
         $offlineAuthor = ($videosOfflineChannels)[$videoOfflineIndex]
         $onlineAuthor = ($videosOnlineChannels)[$videoOnlineIndex]
         if ($offlineAuthor -ne $onlineAuthor) {
-            # Write-Output "$offlineAuthor, $onlineAuthor mismatch for $videoNumber.mp3 $videoTitle"
+            Write-Output "$offlineAuthor, $onlineAuthor mismatch for $videoNumber.mp3 $videoTitle"
             Remove-Item -Path "temp\$videoNumber.mp3"
             $mismatches++
         }
@@ -40,6 +40,7 @@ foreach ($video in $videosOffline) {
     }
     else {
         Write-Output "Not found: $videoTitle"
+        $mismatches++
         Remove-Item -Path "temp\$videoNumber.mp3"
     }
 }

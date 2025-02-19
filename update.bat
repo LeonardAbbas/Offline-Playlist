@@ -14,7 +14,6 @@ del videos_offline_channels.txt
 del videos_online.txt
 del videos_online_channels.txt
 
-call rename.bat
 call sort.bat
 
 endlocal

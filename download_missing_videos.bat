@@ -12,6 +12,9 @@ for /L %%i in (1,1,!songsInPlaylist!) do (
     if not exist "temp\!num!.mp3" (
         echo Downloading !num!
         yt-dlp -I %%i
+        if %%i lss 1000 (
+            ren "temp\%%i.mp3" "!num!.mp3"
+        )
     )
 )
 
