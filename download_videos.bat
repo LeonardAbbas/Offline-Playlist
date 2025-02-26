@@ -20,9 +20,9 @@ for /f "delims=" %%a in ('type "videos_online.txt"') do (
 echo Songs in playlist: %songsInPlaylist%
 
 :download_loop
-if %songsDownloaded% lss %songsInPlaylist% (
-    echo Downloading videos %songsDownloaded% to %songsInPlaylist%
-    yt-dlp -I %songsDownloaded%:%songsInPlaylist%
+if !songsDownloaded! lss !songsInPlaylist! (
+    set /a end=!songsInPlaylist!-!songsDownloaded!+1
+    yt-dlp -I 1:!end!
     set /a songsDownloaded+=100
     goto :download_loop
 )
@@ -32,10 +32,8 @@ for /L %%i in (1,1,!songsInPlaylist!) do (
     set "num=!num:~-4!"
     if not exist "temp\!num!.mp3" (
         echo Downloading !num!
-        yt-dlp -I %%i
-        if %%i lss 1000 (
-            ren "temp\%%i.mp3" "!num!.mp3"
-        )
+        set /a num=!songsInPlaylist!-%%i+1
+        yt-dlp -I !num!
     )
 )
 
