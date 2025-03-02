@@ -32,7 +32,7 @@ call download_videos.bat
 del videos_offline.txt
 del videos_online.txt
 
-@REM call sort.bat
+call sort.bat
 
 echo Finished updating: %time%
 
