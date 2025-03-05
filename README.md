@@ -1,3 +1,5 @@
+You will need exiftool and yt-dlp with ffmpeg for this script to work.
+
 Playlist Rules:
 1. No song longer than 7 min or shorter than 30 sec
 2. No duplicate song
