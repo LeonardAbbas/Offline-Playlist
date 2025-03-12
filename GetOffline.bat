@@ -1,2 +1,2 @@
 @echo off
-exiftool -T -FileName -Duration -Title temp\*.mp3 > videos_offline.txt
+exiftool -T -filename -title -purl temp\*.mp3 > videos_offline.txt
