@@ -23,6 +23,7 @@ foreach ($video in $videosOffline) {
         Write-Output "Multiple matches for $fileName $title $id"
         Write-Output $match.LineNumber
         Remove-Item -Path "temp\$fileName"
+        continue
     }
     
     $videoNumberPadded = $match.LineNumber.ToString("D4")
