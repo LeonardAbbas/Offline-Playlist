@@ -26,10 +26,10 @@ foreach ($video in $videosOffline) {
         continue
     }
     
-    $videoNumberPadded = $match.LineNumber.ToString("D4")
+    $matchLineNumber = $match.LineNumber
         
-    if ($fileName -ne "$videoNumberPadded.mp3") {
-        Rename-Item -Path "temp\$fileName" -NewName "t$videoNumberPadded.mp3"
+    if ($fileName -ne "$matchLineNumber.mp3") {
+        Rename-Item -Path "temp\$fileName" -NewName "t$matchLineNumber.mp3"
     }
 }
 
