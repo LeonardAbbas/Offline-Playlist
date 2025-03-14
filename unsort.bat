@@ -3,8 +3,10 @@ setlocal enabledelayedexpansion
 
 echo Start unsorting: %time%
 
-if not exist "temp" mkdir "temp"
+cd ..
 
-for /r %%f in (*.mp3) do for %%a in ("%%f\..") do if not "%%~nxa"=="temp" move "%%f" "temp" >nul   
+if not exist "Music" mkdir "Music"
+
+for /r %%f in (*.mp3) do for %%a in ("%%f\..") do if not "%%~nxa"=="Music" move "%%f" "Music" >nul   
 
 echo End unsorting: %time%

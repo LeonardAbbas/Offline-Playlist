@@ -5,6 +5,8 @@ REM Moves all mp3 files into numbered folders with 256 files each.
 
 echo Start sorting: %time%
 
+cd ..
+
 for /r %%f in (*.mp3) do (
     set "name=%%~nf"
     call :removeLeadingZeros

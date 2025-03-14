@@ -1,5 +1,9 @@
-$videosOffline = Get-Content -Path "videos_offline.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
-$videosOnline = Get-Content -Path "videos_online.txt" -Encoding UTF8 | ForEach-Object { $_ -replace '!', '' }
+$videosOffline = Get-Content "$PSScriptRoot\videos_offline.txt"
+$videosOnline = Get-Content "$PSScriptRoot\videos_online.txt"
+
+Write-Output (Get-Item $PSScriptRoot).Parent.FullName
+
+Set-Location -Path (Get-Item $PSScriptRoot).Parent.FullName
 
 foreach ($video in $videosOffline) {
     $video = $video -split "`t"
@@ -15,25 +19,25 @@ foreach ($video in $videosOffline) {
 
     if (-not $match) {
         Write-Output "Not found $fileName $title $id"
-        Remove-Item -Path "temp\$fileName"
+        Remove-Item -Path "Music\$fileName"
         continue
     }
 
     if ($match.Count -gt 1) {
         Write-Output "Multiple matches for $fileName $title $id"
         Write-Output $match.LineNumber
-        Remove-Item -Path "temp\$fileName"
+        Remove-Item -Path "Music\$fileName"
         continue
     }
     
     $matchLineNumber = $match.LineNumber
         
     if ($fileName -ne "$matchLineNumber.mp3") {
-        Rename-Item -Path "temp\$fileName" -NewName "t$matchLineNumber.mp3"
+        Rename-Item -Path "Music\$fileName" -NewName "t$matchLineNumber.mp3"
     }
 }
 
-Get-ChildItem -Path "temp" -Filter "t*.mp3" | ForEach-Object {
+Get-ChildItem -Path "Music" -Filter "t*.mp3" | ForEach-Object {
     $newName = $_.Name.Substring(1)
     Rename-Item -Path $_.FullName -NewName $newName
 }
