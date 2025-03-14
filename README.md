@@ -1,4 +1,4 @@
-You will need exiftool and yt-dlp with ffmpeg for this script to work.
+You will need ffmpeg, ffplay, and ffprobe for yt-dlp to properly add metadata to downloaded videos.
 
 Playlist Rules:
 1. No song longer than 7 min or shorter than 30 sec
