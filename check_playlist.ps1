@@ -33,6 +33,11 @@ foreach ($video in $videosOffline) {
     $matchLineNumber = $match.LineNumber
         
     if ($fileName -ne "$matchLineNumber.mp3") {
+        if (Test-Path -Path "Music\t$matchLineNumber.mp3") {
+            Write-Output "t$matchLineNumber.mp3 already exists"
+            Remove-Item -Path "Music\$fileName"
+            continue
+        }
         Rename-Item -Path "Music\$fileName" -NewName "t$matchLineNumber.mp3"
     }
 }
