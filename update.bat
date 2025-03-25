@@ -28,8 +28,6 @@ call Download.bat
 del videos_offline.txt
 del videos_online.txt
 
-call Sort.bat
-
 echo Finished updating: %time%
 
 endlocal
