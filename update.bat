@@ -28,6 +28,8 @@ call Download.bat
 del videos_offline.txt
 del videos_online.txt
 
+call AdjustGain.bat
+
 echo Finished updating: %time%
 
 endlocal
