@@ -19,7 +19,7 @@ for /r %%f in (*.mp3) do (
     move "%%f" "Music !folder!\%%~nxf" >nul
 )
 
-rmdir /s /q temp
+rmdir /s /q Music
 echo End sorting: %time%
 
 endlocal
