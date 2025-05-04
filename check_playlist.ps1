@@ -1,4 +1,4 @@
-$videosOffline = Get-Content "$PSScriptRoot\videos_offline.txt"
+$videosOffline = Get-Content "$PSScriptRoot\videos_offline.txt" -Encoding UTF8
 $videosOnline = Get-Content "$PSScriptRoot\videos_online.txt"
 
 Write-Output (Get-Item $PSScriptRoot).Parent.FullName
