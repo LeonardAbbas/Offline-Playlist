@@ -30,7 +30,7 @@ foreach ($video in $videosOffline) {
         continue
     }
     
-    $matchLineNumber = $match.LineNumber
+    $matchLineNumber = "{0:D4}" -f $match.LineNumber
         
     if ($fileName -ne "$matchLineNumber.mp3") {
         if (Test-Path -Path "Music\t$matchLineNumber.mp3") {
