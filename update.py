@@ -3,10 +3,6 @@ import subprocess
 import os
 
 
-def run_batch(filename):
-    subprocess.run([filename], shell=True)
-
-
 def run_powershell(script):
     subprocess.run(["powershell.exe", "-ExecutionPolicy", "Bypass", "-File", script])
 
@@ -65,9 +61,7 @@ def main():
         mp3_path = os.path.join("Music", f"{padded_num}.mp3")
         if not os.path.exists(mp3_path):
             print(f"Downloading {padded_num} {video_id}")
-            subprocess.run(
-                f"Offline-Playlist\\yt-dlp {video_id} -o {mp3_path}"
-            )
+            subprocess.run(f"Offline-Playlist\\yt-dlp {video_id} -o {mp3_path}")
         num += 1
 
     offline_txt_path = os.path.join("Offline-Playlist", "videos_offline.txt")
