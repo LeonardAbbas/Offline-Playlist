@@ -1,3 +1,4 @@
+from glob import glob
 import shutil
 import subprocess
 import os
@@ -181,8 +182,9 @@ def main():
         os.remove("videos_online.txt")
 
     print("Adjusting gain")
+    music_files = glob(MUSIC_GLOB)
     subprocess.run(
-        f"mp3gain /r /c /q {MUSIC_GLOB}",
+        ["mp3gain", "/r", "/c", "/q", *music_files],
         stdout=subprocess.DEVNULL,
     )
 
