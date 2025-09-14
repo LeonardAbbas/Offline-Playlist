@@ -1,6 +1,15 @@
 import shutil
 import subprocess
 import os
+import sys
+
+try:
+    from mutagen.easyid3 import EasyID3
+    from mutagen.mp3 import MP3
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "mutagen"])
+    from mutagen.easyid3 import EasyID3
+    from mutagen.mp3 import MP3
 
 
 def run_powershell(script):
@@ -33,10 +42,30 @@ def main():
 
     print("Getting offline videos")
     os.chdir("..")
-    subprocess.run(
-        "Offline-Playlist\\exiftool -T -filename -title -purl Music\\*.mp3",
-        stdout=open("Offline-Playlist\\videos_offline.txt", "w"),
-    )
+
+    output_path = os.path.join("Offline-Playlist", "videos_offline.txt")
+    music_dir = "Music"
+
+    with open(output_path, "w", encoding="utf-8") as out_file:
+        for filename in os.listdir(music_dir):
+            if filename.lower().endswith(".mp3"):
+                file_path = os.path.join(music_dir, filename)
+                try:
+                    audio = MP3(file_path, ID3=EasyID3)
+                    title = audio.get("title", [""])[0]
+                    # 'purl' is not a standard ID3 tag; try to read it from TXXX frame
+                    from mutagen.id3 import ID3, TXXX
+
+                    id3 = ID3(file_path)
+                    purl = ""
+                    for frame in id3.getall("TXXX"):
+                        if frame.desc.lower() == "purl":
+                            purl = frame.text[0] if frame.text else ""
+                            break
+                    out_file.write(f"{filename}\t{title}\t{purl}\n")
+                except Exception:
+                    out_file.write(f"{filename}\t\t\n")
+
     os.chdir("Offline-Playlist")
 
     print("Getting online videos")
