@@ -4,6 +4,16 @@ import os
 import sys
 
 try:
+    import yt_dlp
+except ImportError:
+    print("yt-dlp not found, installing...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "yt-dlp"])
+    import yt_dlp
+
+from yt_dlp import YoutubeDL
+
+
+try:
     from mutagen.easyid3 import EasyID3
     from mutagen.mp3 import MP3
 except ImportError:
@@ -60,10 +70,21 @@ def main():
                     out_file.write(f"{filename}\t\t\n")
 
     print("Getting online videos")
-    subprocess.run(
-        "yt-dlp PLLrZ_MgFFAB_yF8QNecKLEmBiVfXM4L2H -U --flat-playlist --print id -I ::-1",
-        stdout=open("videos_online.txt", "w"),
+    playlist = (
+        "https://www.youtube.com/playlist?list=PLLrZ_MgFFAB_yF8QNecKLEmBiVfXM4L2H"
     )
+    ydl_opts = {
+        "extract_flat": True,
+        "skip_download": True,
+        "quiet": True,
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(playlist, download=False)
+    entries = info.get("entries")
+    entries = entries[::-1]
+    with open("videos_online.txt", "w", encoding="utf-8") as f:
+        for entry in entries:
+            f.write(entry.get("id", "") + "\n")
 
     # Read offline and online videos
     with open("videos_offline.txt", encoding="utf-8") as f:
@@ -127,10 +148,31 @@ def main():
     num = 1
     for video_id in video_ids:
         padded_num = f"{num:04d}"
-        mp3_path = os.path.join(f"{MUSIC_DIR}", f"{padded_num}.mp3")
-        if not os.path.exists(mp3_path):
+        final_path = os.path.join(f"{MUSIC_DIR}", f"{padded_num}.mp3")
+        mp3_path = os.path.join(f"{MUSIC_DIR}", f"{padded_num}.%(ext)s")
+        if not os.path.exists(final_path):
             print(f"Downloading {padded_num} {video_id}")
-            subprocess.run(f"yt-dlp {video_id} -o {mp3_path}")
+
+            ydl_opts = {
+                "format": "bestaudio/best",
+                "outtmpl": mp3_path,
+                "quiet": True,
+                "postprocessors": [
+                    {
+                        "key": "FFmpegExtractAudio",
+                        "preferredcodec": "mp3",
+                        "preferredquality": "192",
+                    },
+                    {"key": "FFmpegMetadata"},
+                ],
+                "embed_metadata": True,
+                "encoding": "utf-8",
+                "parse_metadata": "%(uploader|)s:%(meta_artist)s",
+                "extractor_args": {"youtube": "lang=en"},
+            }
+
+            with YoutubeDL(ydl_opts) as ydl:
+                ydl.download([video_id])
         num += 1
 
     if os.path.exists("videos_offline.txt"):
