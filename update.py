@@ -74,7 +74,61 @@ def main():
         stdout=open("videos_online.txt", "w"),
     )
 
-    run_powershell("check_playlist.ps1")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.abspath(os.path.join(script_dir, ".."))
+    music_dir = os.path.join(parent_dir, "Music")
+
+    # Read offline and online videos
+    with open(os.path.join(script_dir, "videos_offline.txt"), encoding="utf-8") as f:
+        videos_offline = [line.strip().split('\t') for line in f if line.strip()]
+    with open(os.path.join(script_dir, "videos_online.txt"), encoding="utf-8") as f:
+        videos_online = [line.strip() for line in f if line.strip()]
+
+    # Build a lookup for online IDs
+    online_id_to_index = {id: idx for idx, id in enumerate(videos_online, start=1)}
+
+    for video in videos_offline:
+        if len(video) < 3:
+            continue
+        file_name, title, id_full = video
+        video_id = id_full[-11:] if len(id_full) >= 11 else id_full
+
+        matches = [i for i, v_id in enumerate(videos_online, start=1) if v_id == video_id]
+
+        file_path = os.path.join(music_dir, file_name)
+
+        if not matches:
+            print(f"Not found {file_name} {title} {video_id}")
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            continue
+
+        if len(matches) > 1:
+            print(f"Multiple matches for {file_name} {title} {video_id}")
+            print(matches)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            continue
+
+        match_line_number = f"{matches[0]:04d}"
+        new_name = f"t{match_line_number}.mp3"
+        new_path = os.path.join(music_dir, new_name)
+
+        if file_name != f"{match_line_number}.mp3":
+            if os.path.exists(new_path):
+                print(f"{new_name} already exists")
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                continue
+            if os.path.exists(file_path):
+                os.rename(file_path, new_path)
+
+    # Remove leading 't' from renamed files
+    for fname in os.listdir(music_dir):
+        if fname.startswith("t") and fname.endswith(".mp3"):
+            src = os.path.join(music_dir, fname)
+            dst = os.path.join(music_dir, fname[1:])
+            os.rename(src, dst)
 
     print("Downloading videos")
     parent_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
