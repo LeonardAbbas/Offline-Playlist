@@ -23,7 +23,7 @@ except ImportError:
     from mutagen.mp3 import MP3
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PARENT_DIR = os.path.join(SCRIPT_DIR, "..")
+PARENT_DIR = os.path.dirname(SCRIPT_DIR)
 MUSIC_DIR = os.path.join(PARENT_DIR, "Music")
 MUSIC_GLOB = os.path.join(MUSIC_DIR, "*.mp3")
 
@@ -108,9 +108,6 @@ def main():
         videos_offline = [line.strip().split("\t") for line in f if line.strip()]
     with open("videos_online.txt", encoding="utf-8") as f:
         videos_online = [line.strip() for line in f if line.strip()]
-
-    # Build a lookup for online IDs
-    online_id_to_index = {id: idx for idx, id in enumerate(videos_online, start=1)}
 
     for video in videos_offline:
         if len(video) < 3:
