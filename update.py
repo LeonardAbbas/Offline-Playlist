@@ -46,7 +46,11 @@ def main():
     for root, dirs, _ in os.walk(PARENT_DIR, topdown=False):
         for dir_name in dirs:
             dir_path = os.path.join(root, dir_name)
-            if os.path.isdir(dir_path) and not os.listdir(dir_path):
+            if (
+                os.path.isdir(dir_path)
+                and os.path.basename(dir_path).startswith("Music ")
+                and not os.listdir(dir_path)
+            ):
                 os.rmdir(dir_path)
 
     print("Getting offline videos")
