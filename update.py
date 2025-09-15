@@ -29,29 +29,42 @@ MUSIC_GLOB = os.path.join(MUSIC_DIR, "*.mp3")
 
 
 def main():
-    print("Start unsorting")
-    if not os.path.exists(MUSIC_DIR):
-        os.makedirs(MUSIC_DIR)
+    while True:
+        user_input = input("Do you want to unsort? (y/n): ").strip().lower()
+        if user_input in ["yes", "y"]:
+            user_choice = True
+            break
+        elif user_input in ["no", "n"]:
+            user_choice = False
+            break
+        else:
+            print("Invalid input. Please enter 'y' or 'n'.")
 
-    # Move all mp3 files not already in 'Music' into 'Music'
-    for root, _, files in os.walk(PARENT_DIR):
-        for file in files:
-            if file.lower().endswith(".mp3"):
-                src_path = os.path.join(root, file)
-                # Skip files already in 'Music'
-                if os.path.basename(root).lower() != "music":
-                    shutil.move(src_path, os.path.join(MUSIC_DIR, file))
+    
+    if user_choice:
+        print("Start unsorting")
+        if not os.path.exists(MUSIC_DIR):
+            os.makedirs(MUSIC_DIR)
 
-    # Remove all empty folders in parent_dir
-    for root, dirs, _ in os.walk(PARENT_DIR, topdown=False):
-        for dir_name in dirs:
-            dir_path = os.path.join(root, dir_name)
-            if (
-                os.path.isdir(dir_path)
-                and os.path.basename(dir_path).startswith("Music ")
-                and not os.listdir(dir_path)
-            ):
-                os.rmdir(dir_path)
+        # Move all mp3 files not already in 'Music' into 'Music'
+        for root, _, files in os.walk(PARENT_DIR):
+            for file in files:
+                if file.lower().endswith(".mp3"):
+                    src_path = os.path.join(root, file)
+                    # Skip files already in 'Music'
+                    if os.path.basename(root).lower() != "music":
+                        shutil.move(src_path, os.path.join(MUSIC_DIR, file))
+
+        # Remove all empty folders in parent_dir
+        for root, dirs, _ in os.walk(PARENT_DIR, topdown=False):
+            for dir_name in dirs:
+                dir_path = os.path.join(root, dir_name)
+                if (
+                    os.path.isdir(dir_path)
+                    and os.path.basename(dir_path).startswith("Music ")
+                    and not os.listdir(dir_path)
+                ):
+                    os.rmdir(dir_path)
 
     print("Getting offline videos")
     with open("videos_offline.txt", "w", encoding="utf-8") as out_file:
