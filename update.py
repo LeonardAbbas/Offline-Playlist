@@ -200,12 +200,12 @@ def main():
     print("Adjusting gain")
     if os.name == "posix":  # Linux or MacOS
         subprocess.run(
-            ["mp3gain.exe", "/r", "/c", "/q", *glob(MUSIC_GLOB)],
+            ["mp3gain", "/r", "/c", "/q", *glob(MUSIC_GLOB)],
             stdout=subprocess.DEVNULL,
         )
     else:  # Windows
         subprocess.run(
-            ["mp3gain.exe", "/r", "/c", "/q", MUSIC_GLOB],
+            ["mp3gain", "/r", "/c", "/q", MUSIC_GLOB],
             stdout=subprocess.DEVNULL,
         )
 
