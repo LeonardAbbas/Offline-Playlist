@@ -4,13 +4,7 @@ import subprocess
 import os
 import sys
 
-try:
-    import yt_dlp
-except ImportError:
-    print("yt-dlp not found, installing...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "yt-dlp"])
-    import yt_dlp
-
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"])
 from yt_dlp import YoutubeDL
 
 
