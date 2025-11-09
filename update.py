@@ -2,19 +2,10 @@ from glob import glob
 import shutil
 import subprocess
 import os
-import sys
 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"])
 from yt_dlp import YoutubeDL
-
-
-try:
-    from mutagen.easyid3 import EasyID3
-    from mutagen.mp3 import MP3
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "mutagen"])
-    from mutagen.easyid3 import EasyID3
-    from mutagen.mp3 import MP3
+from mutagen.easyid3 import EasyID3
+from mutagen.mp3 import MP3
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(SCRIPT_DIR)
@@ -132,14 +123,7 @@ def main():
         new_name = f"t{match_line_number}.mp3"
         new_path = os.path.join(MUSIC_DIR, new_name)
 
-        if file_name != f"{match_line_number}.mp3":
-            if os.path.exists(new_path):
-                print(f"{new_name} already exists")
-                if os.path.exists(file_path):
-                    os.remove(file_path)
-                continue
-            if os.path.exists(file_path):
-                os.rename(file_path, new_path)
+        os.rename(file_path, new_path)
 
     # Remove leading 't' from renamed files
     for fname in os.listdir(MUSIC_DIR):
