@@ -2,14 +2,15 @@ import os
 import shutil
 
 
+PARENT_DIR = os.path.abspath(os.path.join(os.getcwd(), ".."))
+MUSIC_DIR = os.path.join(PARENT_DIR, "Music")
+
 def main():
     print("Start sorting")
-    parent_dir = os.path.abspath(os.path.join(os.getcwd(), ".."))
-    music_dir = os.path.join(parent_dir, "Music")
 
     # Collect all mp3 files recursively
     mp3_files = []
-    for root, _, files in os.walk(parent_dir):
+    for root, _, files in os.walk(PARENT_DIR):
         for file in files:
             if file.lower().endswith(".mp3"):
                 mp3_files.append(os.path.join(root, file))
@@ -29,15 +30,15 @@ def main():
             folder_num += 1
 
         folder_name = f"Music {folder_num}"
-        folder_path = os.path.join(parent_dir, folder_name)
+        folder_path = os.path.join(PARENT_DIR, folder_name)
 
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         shutil.move(mp3_file, os.path.join(folder_path, os.path.basename(mp3_file)))
 
     # Remove the original Music directory
-    if os.path.exists(music_dir):
-        shutil.rmtree(music_dir, ignore_errors=True)
+    if os.path.exists(MUSIC_DIR):
+        shutil.rmtree(MUSIC_DIR, ignore_errors=True)
 
 
 if __name__ == "__main__":

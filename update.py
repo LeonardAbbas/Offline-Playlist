@@ -7,8 +7,7 @@ from yt_dlp import YoutubeDL
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PARENT_DIR = os.path.dirname(SCRIPT_DIR)
+PARENT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MUSIC_DIR = os.path.join(PARENT_DIR, "Music")
 MUSIC_GLOB = os.path.join(MUSIC_DIR, "*.mp3")
 
