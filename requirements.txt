@@ -1,2 +1,2 @@
 mutagen
-yt-dlp
+yt-dlp[default]
