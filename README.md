@@ -4,9 +4,13 @@ Windows Setup:
 Install yt-dlp release of ffmpeg and copy ffmpeg.exe, ffplay.exe, and ffprobe.exe into "Offline-Playlist" folder. Download mp3gain.exe and copy into "Offline-Playlist" folder also.
 
 Linux Setup:
-Make sure to set up .venv before running. Install ffmpeg and mp3gain with a package manager.
+
+Make sure to set up .venv before running. Install ffmpeg and mp3gain with a package manager. Also install deno with the command below.
 
 `sudo apt install ffmpeg mp3gain -y`
+
+`curl -fsSL https://deno.land/install.sh | sh`
+
 
 Playlist Rules:
 1. No song longer than 7 min or shorter than 30 sec
