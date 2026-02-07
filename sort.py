@@ -3,7 +3,7 @@ import shutil
 
 
 PARENT_DIR = os.path.abspath(os.path.join(os.getcwd(), ".."))
-MUSIC_DIR = os.path.join(PARENT_DIR, "Music")
+MUSIC_DIR = os.path.join(PARENT_DIR, "music")
 
 def main():
     print("Start sorting")
@@ -29,14 +29,14 @@ def main():
             end += 256
             folder_num += 1
 
-        folder_name = f"Music {folder_num}"
+        folder_name = f"music {folder_num}"
         folder_path = os.path.join(PARENT_DIR, folder_name)
 
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         shutil.move(mp3_file, os.path.join(folder_path, os.path.basename(mp3_file)))
 
-    # Remove the original Music directory
+    # Remove the original music directory
     if os.path.exists(MUSIC_DIR):
         shutil.rmtree(MUSIC_DIR, ignore_errors=True)
 

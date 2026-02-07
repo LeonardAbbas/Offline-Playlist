@@ -8,7 +8,7 @@ from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 
 PARENT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MUSIC_DIR = os.path.join(PARENT_DIR, "Music")
+MUSIC_DIR = os.path.join(PARENT_DIR, "music")
 MUSIC_GLOB = os.path.join(MUSIC_DIR, "*.mp3")
 
 
@@ -29,12 +29,12 @@ def main():
         if not os.path.exists(MUSIC_DIR):
             os.makedirs(MUSIC_DIR)
 
-        # Move all mp3 files not already in 'Music' into 'Music'
+        # Move all mp3 files not already in 'music' into 'music'
         for root, _, files in os.walk(PARENT_DIR):
             for file in files:
                 if file.lower().endswith(".mp3"):
                     src_path = os.path.join(root, file)
-                    # Skip files already in 'Music'
+                    # Skip files already in 'music'
                     if os.path.basename(root).lower() != "music":
                         shutil.move(src_path, os.path.join(MUSIC_DIR, file))
 
@@ -44,7 +44,7 @@ def main():
                 dir_path = os.path.join(root, dir_name)
                 if (
                     os.path.isdir(dir_path)
-                    and os.path.basename(dir_path).startswith("Music ")
+                    and os.path.basename(dir_path).startswith("music ")
                     and not os.listdir(dir_path)
                 ):
                     os.rmdir(dir_path)
