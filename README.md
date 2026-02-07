@@ -6,6 +6,8 @@ Install yt-dlp release of ffmpeg and copy ffmpeg.exe, ffplay.exe, and ffprobe.ex
 Linux Setup:
 Make sure to set up .venv before running. Install ffmpeg and mp3gain with a package manager.
 
+`sudo apt install ffmpeg mp3gain -y`
+
 Playlist Rules:
 1. No song longer than 7 min or shorter than 30 sec
 2. No duplicate song
