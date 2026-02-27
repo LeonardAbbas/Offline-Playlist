@@ -1,24 +1,20 @@
 # Offline-Playlist
 
-## Windows Setup:
-
-Install yt-dlp release of ffmpeg and copy ffmpeg.exe, ffplay.exe, and ffprobe.exe into "Offline-Playlist" folder. Download mp3gain.exe and copy into "Offline-Playlist" folder also.
-
-## Linux Setup:
-
-1. Install ffmpeg, mp3gain, and deno.
+## Debian Installation:
 
 ```
-sudo apt install ffmpeg mp3gain -y
+sudo apt install ffmpeg mp3gain python3.13-venv -y
 curl -fsSL https://deno.land/install.sh | sh
-```
-
-2. Set up the virtual environment inside Visual Studio Code.
-
-```
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+## To Run
+
+```
+source .venv/bin/activate
+python3 update.py
 ```
 
 ## Playlist Rules:
