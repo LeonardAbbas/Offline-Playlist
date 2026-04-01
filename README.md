@@ -25,6 +25,6 @@ python3 update.py
 2. No duplicate songs
 3. No age restricted videos
 4. Song should be the best version of that song
-5. Try to add the song version of the video from Youtube Music or a channel that ends with "Topic"
+5. If the song is on YouTube Music it should be added from there because the metadata and audio quality will be better
 6. Avoid adding Nintendo music because they keep taking them down
 7. Based songs only
