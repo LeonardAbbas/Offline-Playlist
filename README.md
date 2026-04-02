@@ -11,11 +11,17 @@ pip install -r requirements.txt
 exit
 ```
 
+## To Update
+```
+git pull
+source .venv/bin/activate
+pip install --upgrade -r requirements.txt
+```
+
 ## To Run
 
 ```
 source .venv/bin/activate
-pip install --upgrade -r requirements.txt
 python3 update.py
 ```
 
