@@ -11,6 +11,24 @@ pip install -r requirements.txt
 exit
 ```
 
+## Arch Installation:
+
+Required packages `deno` `ffmpeg`, `git`, `mp3gain`(AUR), `python`, and `unzip`.
+```
+sudo pacman -Syu ffmpeg git python unzip
+yay -Syu mp3gain
+curl -fsSL https://deno.land/install.sh | sh
+exit
+```
+### Installation
+```
+git clone https://github.com/LeonardAbbas/Offline-Playlist.git
+cd Offline-Playlist/
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## To Update
 ```
 git pull
@@ -20,9 +38,16 @@ pip install --upgrade -r requirements.txt
 
 ## To Run
 
+### Debian
 ```
 source .venv/bin/activate
 python3 update.py
+```
+
+### Arch
+```
+source .venv/bin/activate
+python update.py
 ```
 
 ## Playlist Rules:
