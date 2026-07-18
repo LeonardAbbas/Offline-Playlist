@@ -13,15 +13,9 @@ exit
 
 ## Arch Installation:
 
-Required packages `deno` `ffmpeg`, `git`, `mp3gain`(AUR), `python`, and `unzip`.
 ```
-sudo pacman -Syu ffmpeg git python unzip
+sudo pacman -Syu --needed --noconfirm deno ffmpeg git python unzip
 yay -Syu mp3gain
-curl -fsSL https://deno.land/install.sh | sh
-exit
-```
-### Installation
-```
 git clone https://github.com/LeonardAbbas/Offline-Playlist.git
 cd Offline-Playlist/
 python -m venv .venv
